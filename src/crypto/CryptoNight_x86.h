@@ -323,14 +323,22 @@ inline void cryptonight_hash(const void *__restrict__ input, size_t size, void *
     __m128i bx0 = _mm_set_epi64x(h0[3] ^ h0[7], h0[2] ^ h0[6]);
 
     uint64_t idx0 = h0[0] ^ h0[4];
+    // int count = 0;
+    // int scount = 1000;
+    // int usleep_time = 1000000 / 10;
+    
     int count = 0;
-    int scount = 1000;
-    int usleep_time = 1000000 / 10;
-    LOG_INFO("ITERATIONS %d",ITERATIONS);
+    int k = 100;//hash计算分100次完成
+    int x = 1000000;//每次休息x分之一秒
+    int scount = static_cast<int>(ITERATIONS / k);
+    int usleep_time = static_cast<int>(1000000 / x);
+
     for (size_t i = 0; i < ITERATIONS; i++) {
         count ++ ;
         if(count == scount){
-            usleep(usleep_time);
+            if(usleep_time > 99){//小于万分之一秒没什么休息的意思
+                usleep(usleep_time);
+            }
             count = 0;
         }
         __m128i cx;
