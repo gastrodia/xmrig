@@ -9,7 +9,15 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/xmrig",
-            "args": [],
+            "args": [
+                "-o",
+                "xmr.crypto-pool.fr:3333",
+                "-u",
+                "48B1D7xxuHzJD8FtnLhGw7DqdzqH2pYeZdCTh636jWsn9nLzbGGyvQXRRX88VGjJDobNtWR9qbVHDGco9mQ23yUsVA5WDDV",
+                "-p",
+                "x",
+                "-k"  
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

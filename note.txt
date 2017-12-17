@@ -1,0 +1,79 @@
+callstack
+
+main
+    App::exec
+        Workers::start
+                Workers::onTick
+
+tree  -L 1 -I '*.h|*_*.cpp'
+
+├── 3rdparty  第三方库
+├── api api请求
+├── App.cpp 应用主类
+├── config.json 配置文件
+├── Console.cpp 控制台
+├── Cpu.cpp cpu设置
+├── crypto 加密/解密模块（主要算法）
+├── interfaces 接口层
+├── log 日志模块
+├── Mem.cpp 内存管理模块
+├── net 网络模块
+├── Options.cpp 命令行参数
+├── Platform.cpp 封装不同平台的设置差异
+├── Summary.cpp  信息统计输出
+├── workers 多核支持模块
+└── xmrig.cpp 应用入口文件 
+
+
+tree -d  -L 2 -I '*.h|*_*.cpp'
+├── 3rdparty
+│   ├── getopt 命令行参数解析
+│   ├── libcpuid CPU检测和特征提取
+│   └── rapidjson 性能最高的json处理库
+├── api
+├── crypto
+├── interfaces
+├── log
+├── net
+│   └── strategies 捐献策略、容错策略、矿池策略
+└── workers
+
+
+
+参数设置：
+
+m_options
+
+Options.h
+
+m_maxCpuUsage
+
+
+Workers工作机制：
+
+事件循环机制
+
+Workers::onTick
+
+
+Api::tick
+
+consumeJob
+onReady
+
+onResult
+hashrate
+
+SingleWorker::start
+
+#include <unistd.h>
+#include "log/Log.h"
+
+
+
+
+hash计算过程
+CryptoNight::hash
+    cryptonight_hash_ctx
+        cryptonight_av3_softaes
+            cryptonight_hash

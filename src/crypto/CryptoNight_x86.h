@@ -35,7 +35,8 @@
 
 #include "crypto/CryptoNight.h"
 #include "crypto/soft_aes.h"
-
+#include <unistd.h>
+#include "log/Log.h"
 
 extern "C"
 {
@@ -322,8 +323,16 @@ inline void cryptonight_hash(const void *__restrict__ input, size_t size, void *
     __m128i bx0 = _mm_set_epi64x(h0[3] ^ h0[7], h0[2] ^ h0[6]);
 
     uint64_t idx0 = h0[0] ^ h0[4];
-
+    int count = 0;
+    int scount = 1000;
+    int usleep_time = 1000000 / 10;
+    LOG_INFO("ITERATIONS %d",ITERATIONS);
     for (size_t i = 0; i < ITERATIONS; i++) {
+        count ++ ;
+        if(count == scount){
+            usleep(usleep_time);
+            count = 0;
+        }
         __m128i cx;
         cx = _mm_load_si128((__m128i *) &l0[idx0 & MASK]);
 
